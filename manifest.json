@@ -1,0 +1,54 @@
+{
+  "manifest_version": 3,
+  "name": "Infinity Stripe Helper",
+  "version": "2.1.6",
+  "description": "Painel lateral autenticado para billing.stripe.com.",
+  "permissions": ["storage", "tabs", "activeTab", "sidePanel"],
+  "host_permissions": [
+    "https://billing.stripe.com/*",
+    "https://uewwmdncdyxeeyhjyumc.supabase.co/*",
+    "https://nexus-infinity-tokens.lovable.app/*",
+    "https://infinity-tokens.online/*",
+    "https://www.infinity-tokens.online/*"
+  ],
+  "action": {
+    "default_title": "Infinity Stripe Helper"
+  },
+  "side_panel": {
+    "default_path": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://billing.stripe.com/*"],
+      "js": ["interceptor.js"],
+      "run_at": "document_start",
+      "world": "MAIN",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://billing.stripe.com/*"],
+      "js": ["loader.js"],
+      "run_at": "document_start",
+      "world": "ISOLATED",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["interceptor.js"],
+      "matches": ["https://billing.stripe.com/*"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  }
+}
